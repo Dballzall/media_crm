@@ -1,9 +1,12 @@
-import { CRM } from './root/CRM';
+import { BypassAuthCRM } from './root/BypassAuthCRM';
 
 /**
  * Application entry point
  *
- * Customize Atomic CRM by passing props to the CRM component:
+ * This version uses BypassAuthCRM which automatically logs in as an admin user
+ * without requiring authentication, for development and testing purposes.
+ *
+ * The original CRM component accepts these props:
  *  - contactGender
  *  - companySectors
  *  - darkTheme
@@ -19,12 +22,12 @@ import { CRM } from './root/CRM';
  *
  * @example
  * const App = () => (
- *    <CRM
+ *    <BypassAuthCRM
  *       logo="./img/logo.png"
- *       title="Acme CRM"
+ *       title="Media CRM (Auto-Login)"
  *    />
  * );
  */
-const App = () => <CRM />;
+const App = () => <BypassAuthCRM title="Media CRM (Auto-Login)" />;
 
 export default App;
