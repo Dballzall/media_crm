@@ -20,6 +20,7 @@ import {
     useCreate,
     useGetIdentity,
     useNotify,
+    minLength,
 } from 'react-admin';
 import { useFormContext } from 'react-hook-form';
 
@@ -38,7 +39,7 @@ export const ContactInputs = () => {
             <Stack gap={3} direction={isMobile ? 'column' : 'row'}>
                 <Stack gap={4} flex={4}>
                     <ContactIdentityInputs />
-                    <ContactPositionInputs />
+                    <ContactMediaRelationsInputs />
                 </Stack>
                 <Divider
                     orientation={isMobile ? 'horizontal' : 'vertical'}
@@ -82,45 +83,7 @@ const ContactIdentityInputs = () => {
     );
 };
 
-const ContactPositionInputs = () => {
-    const [create] = useCreate();
-    const { identity } = useGetIdentity();
-    const notify = useNotify();
-    const handleCreateCompany = async (name?: string) => {
-        if (!name) return;
-        try {
-            const newCompany = await create(
-                'companies',
-                {
-                    data: {
-                        name,
-                        sales_id: identity?.id,
-                        created_at: new Date().toISOString(),
-                    },
-                },
-                { returnPromise: true }
-            );
-            return newCompany;
-        } catch (error) {
-            notify('An error occurred while creating the company', {
-                type: 'error',
-            });
-        }
-    };
-    return (
-        <Stack>
-            <Typography variant="h6">Position</Typography>
-            <TextInput source="title" helperText={false} />
-            <ReferenceInput source="company_id" reference="companies">
-                <AutocompleteInput
-                    optionText="name"
-                    onCreate={handleCreateCompany}
-                    helperText={false}
-                />
-            </ReferenceInput>
-        </Stack>
-    );
-};
+// Position component removed as requested
 
 const ContactPersonalInformationInputs = () => {
     const { getValues, setValue } = useFormContext();
@@ -214,7 +177,6 @@ const ContactMiscInputs = () => {
                 multiline
                 helperText={false}
             />
-            <BooleanInput source="has_newsletter" helperText={false} />
             <ReferenceInput
                 reference="sales"
                 source="sales_id"
@@ -234,5 +196,44 @@ const ContactMiscInputs = () => {
     );
 };
 
+const ContactMediaRelationsInputs = () => {
+    return (
+        <Stack>
+            <Typography variant="h6">Media Relations</Typography>
+            <TextInput
+                source="outlet"
+                label="Media Outlet"
+                helperText="The publication or media outlet"
+            />
+            <TextInput
+                source="beat"
+                label="Beat"
+                helperText="e.g., AI, enterprise, finance"
+            />
+            <TextInput
+                source="region"
+                label="Region"
+                helperText="Geographic coverage area"
+            />
+            <TextInput
+                source="preferred_topics"
+                label="Preferred Topics"
+                multiline
+                helperText="Topics this contact prefers to cover"
+            />
+            <SelectInput
+                source="relationship_status"
+                label="Relationship Status"
+                choices={[
+                    { id: 'hot', name: 'Hot' },
+                    { id: 'warm', name: 'Warm' },
+                    { id: 'cold', name: 'Cold' },
+                ]}
+                helperText="Current relationship status with this contact"
+            />
+        </Stack>
+    );
+};
+
 const saleOptionRenderer = (choice: Sale) =>
-    `${choice.first_name} ${choice.last_name}`;
+    choice ? `${choice.first_name} ${choice.last_name}` : '';

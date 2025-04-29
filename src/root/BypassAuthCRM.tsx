@@ -1,5 +1,6 @@
 import { CRM, CRMProps } from './CRM';
-import { mockAuthProvider, dataProvider } from '../providers/supabase';
+import { mockAuthProvider } from '../providers/supabase';
+import { authProvider as fakeAuthProvider, dataProvider as fakeDataProvider } from '../providers/fakerest';
 
 /**
  * BypassAuthCRM Component
@@ -12,8 +13,8 @@ import { mockAuthProvider, dataProvider } from '../providers/supabase';
 export const BypassAuthCRM = (props: Omit<CRMProps, 'authProvider'>) => (
   <CRM
     {...props}
-    authProvider={mockAuthProvider}
-    dataProvider={dataProvider}
+    authProvider={fakeAuthProvider}
+    dataProvider={fakeDataProvider}
     requireAuth={false}
   />
 );

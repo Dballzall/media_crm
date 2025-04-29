@@ -90,13 +90,19 @@ export type Contact = {
     linkedin_url?: string | null;
     first_seen: string;
     last_seen: string;
-    has_newsletter: Boolean;
     tags: Identifier[];
     gender: string;
     sales_id: Identifier;
     status: string;
     background: string;
     phone_jsonb: PhoneNumberAndType[];
+    
+    // Media relations specific fields
+    outlet?: string;
+    beat?: string;
+    region?: string;
+    preferred_topics?: string;
+    relationship_status?: 'hot' | 'warm' | 'cold';
 
     nb_tasks?: number;
     company_name?: string;

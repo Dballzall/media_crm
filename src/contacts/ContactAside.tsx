@@ -53,11 +53,6 @@ export const ContactAside = ({ link = 'edit' }: { link?: 'edit' | 'show' }) => {
                     />
                 </SingleFieldList>
             </ArrayField>
-            {record.has_newsletter && (
-                <Typography variant="body2" color="textSecondary" pl={3.5}>
-                    Subscribed to newsletter
-                </Typography>
-            )}
 
             {record.linkedin_url && (
                 <PersonalInfoRow
@@ -98,6 +93,71 @@ export const ContactAside = ({ link = 'edit' }: { link?: 'edit' | 'show' }) => {
                 )}
                 optionValue="value"
             />
+            <Typography variant="subtitle2" mt={2}>
+                Media Relations
+            </Typography>
+            <Divider />
+            {record.outlet && (
+                <Box mt={1}>
+                    <Typography component="span" variant="body2" color="textSecondary">
+                        Outlet:
+                    </Typography>{' '}
+                    <Typography component="span" variant="body2">
+                        {record.outlet}
+                    </Typography>
+                </Box>
+            )}
+            {record.beat && (
+                <Box mt={1}>
+                    <Typography component="span" variant="body2" color="textSecondary">
+                        Beat:
+                    </Typography>{' '}
+                    <Typography component="span" variant="body2">
+                        {record.beat}
+                    </Typography>
+                </Box>
+            )}
+            {record.region && (
+                <Box mt={1}>
+                    <Typography component="span" variant="body2" color="textSecondary">
+                        Region:
+                    </Typography>{' '}
+                    <Typography component="span" variant="body2">
+                        {record.region}
+                    </Typography>
+                </Box>
+            )}
+            {record.preferred_topics && (
+                <Box mt={1}>
+                    <Typography component="span" variant="body2" color="textSecondary">
+                        Preferred Topics:
+                    </Typography>{' '}
+                    <Typography component="span" variant="body2">
+                        {record.preferred_topics}
+                    </Typography>
+                </Box>
+            )}
+            {record.relationship_status && (
+                <Box mt={1}>
+                    <Typography component="span" variant="body2" color="textSecondary">
+                        Relationship Status:
+                    </Typography>{' '}
+                    <Typography 
+                        component="span" 
+                        variant="body2"
+                        sx={{
+                            color: record.relationship_status === 'hot' 
+                                ? 'success.main' 
+                                : record.relationship_status === 'warm' 
+                                    ? 'warning.main' 
+                                    : 'error.main'
+                        }}
+                    >
+                        {record.relationship_status.charAt(0).toUpperCase() + record.relationship_status.slice(1)}
+                    </Typography>
+                </Box>
+            )}
+            
             <Typography variant="subtitle2" mt={2}>
                 Background info
             </Typography>

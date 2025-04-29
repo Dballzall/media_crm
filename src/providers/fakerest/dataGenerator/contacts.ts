@@ -26,7 +26,7 @@ const maxContacts = {
 const getRandomContactDetailsType = () =>
     random.arrayElement(['Work', 'Home', 'Other']) as 'Work' | 'Home' | 'Other';
 
-export const generateContacts = (db: Db, size = 500): Required<Contact>[] => {
+export const generateContacts = (db: Db, size = 500): Contact[] => {
     const nbAvailblePictures = 223;
     let numberOfContacts = 0;
 
@@ -77,6 +77,31 @@ export const generateContacts = (db: Db, size = 500): Required<Contact>[] => {
         ).toISOString();
         const last_seen = first_seen;
 
+        // Media relations fields
+        const outlets = [
+            'The New York Times', 'TechCrunch', 'Wired', 'Forbes', 'Wall Street Journal',
+            'CNBC', 'Bloomberg', 'VentureBeat', 'The Verge', 'Business Insider',
+            'Fast Company', 'MIT Technology Review', 'Axios', 'Protocol', 'Recode'
+        ];
+        
+        const beats = [
+            'AI', 'Enterprise', 'Finance', 'Startups', 'Venture Capital',
+            'Cybersecurity', 'Cloud', 'Mobile', 'Consumer Tech', 'SaaS',
+            'Healthcare Tech', 'Fintech', 'Blockchain', 'E-commerce', 'Digital Marketing'
+        ];
+        
+        const regions = [
+            'National', 'West Coast', 'East Coast', 'Midwest', 'Southwest',
+            'Northeast', 'Southeast', 'Global', 'EMEA', 'APAC',
+            'LATAM', 'New York', 'San Francisco', 'Boston', 'Chicago'
+        ];
+        
+        const topics = [
+            'Funding announcements', 'Product launches', 'Industry trends', 'Executive interviews',
+            'Market analysis', 'Company profiles', 'Thought leadership', 'Data studies',
+            'Regulatory impact', 'Customer success stories'
+        ];
+        
         return {
             id,
             first_name,
@@ -92,13 +117,19 @@ export const generateContacts = (db: Db, size = 500): Required<Contact>[] => {
             avatar,
             first_seen: first_seen,
             last_seen: last_seen,
-            has_newsletter: weightedBoolean(30),
             status: random.arrayElement(defaultNoteStatuses).value,
             tags: random
                 .arrayElements(db.tags, random.arrayElement([0, 0, 0, 1, 1, 2]))
                 .map(tag => tag.id), // finalize
             sales_id: company.sales_id,
             nb_tasks: 0,
+            
+            // Media relations fields
+            outlet: weightedBoolean(80) ? random.arrayElement(outlets) : '',
+            beat: weightedBoolean(80) ? random.arrayElement(beats) : '',
+            region: weightedBoolean(80) ? random.arrayElement(regions) : '',
+            preferred_topics: weightedBoolean(70) ? random.arrayElements(topics, random.arrayElement([1, 2, 3])).join(', ') : '',
+            relationship_status: weightedBoolean(80) ? random.arrayElement(['hot', 'warm', 'cold']) as 'hot' | 'warm' | 'cold' : 'cold',
             linkedin_url: null,
         };
     });
