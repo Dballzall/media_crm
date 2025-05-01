@@ -4,6 +4,7 @@ import {
     ContactNote,
     Deal,
     DealNote,
+    Pitch,
     Sale,
     Tag,
     Task,
@@ -15,6 +16,7 @@ export interface Db {
     contactNotes: ContactNote[];
     deals: Deal[];
     dealNotes: DealNote[];
+    pitches: Pitch[];
     sales: Sale[];
     tags: Tag[];
     tasks: Task[];

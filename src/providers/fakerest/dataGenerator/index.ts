@@ -5,6 +5,7 @@ import { generateContacts } from './contacts';
 import { generateDealNotes } from './dealNotes';
 import { generateDeals } from './deals';
 import { finalize } from './finalize';
+import { generatePitches } from './pitches';
 import { generateSales } from './sales';
 import { generateTags } from './tags';
 import { generateTasks } from './tasks';
@@ -20,6 +21,10 @@ export default (): Db => {
     db.deals = generateDeals(db);
     db.dealNotes = generateDealNotes(db);
     db.tasks = generateTasks(db);
+    db.pitches = generatePitches(
+        db.contacts.map(contact => contact.id as number),
+        db.sales.map(sale => sale.id as number)
+    );
     finalize(db);
 
     return db;

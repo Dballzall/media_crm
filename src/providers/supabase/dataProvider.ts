@@ -13,6 +13,7 @@ import {
     ContactNote,
     Deal,
     DealNote,
+    Pitch,
     RAFile,
     Sale,
     SalesFormData,
@@ -90,6 +91,9 @@ const dataProviderWithCustomMethods = {
         if (resource === 'contacts') {
             return baseDataProvider.getList('contacts_summary', params);
         }
+        if (resource === 'pitches') {
+            return baseDataProvider.getList('pitches_with_contacts', params);
+        }
 
         return baseDataProvider.getList(resource, params);
     },
@@ -99,6 +103,9 @@ const dataProviderWithCustomMethods = {
         }
         if (resource === 'contacts') {
             return baseDataProvider.getOne('contacts_summary', params);
+        }
+        if (resource === 'pitches') {
+            return baseDataProvider.getOne('pitches_with_contacts', params);
         }
 
         return baseDataProvider.getOne(resource, params);
