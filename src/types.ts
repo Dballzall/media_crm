@@ -158,6 +158,19 @@ export type Task = {
     sales_id?: Identifier;
 } & Pick<RaRecord, 'id'>;
 
+export type Pitch = {
+    subject: string;
+    body: string;
+    contact_id: Identifier;
+    status: 'Draft' | 'Sent' | 'Replied';
+    sales_id?: Identifier;
+    created_at: string;
+    updated_at: string;
+    contact_first_name?: string;
+    contact_last_name?: string;
+    contact_outlet?: string;
+} & Pick<RaRecord, 'id'>;
+
 export type ActivityCompanyCreated = {
     type: typeof COMPANY_CREATED;
     company_id: Identifier;

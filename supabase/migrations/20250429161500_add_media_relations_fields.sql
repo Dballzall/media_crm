@@ -6,8 +6,11 @@ ADD COLUMN "region" text,
 ADD COLUMN "preferred_topics" text,
 ADD COLUMN "relationship_status" text;
 
--- Update the contacts_summary view to include the new fields
-CREATE OR REPLACE VIEW "public"."contacts_summary" AS
+-- Drop the existing view first
+DROP VIEW IF EXISTS "public"."contacts_summary";
+
+-- Create the updated view with the new fields
+CREATE VIEW "public"."contacts_summary" AS
 SELECT 
   c.id,
   c.first_name,
